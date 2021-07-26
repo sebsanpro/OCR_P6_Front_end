@@ -1,0 +1,53 @@
+body {
+  background: rgba(24, 24, 24, 0.96);
+}
+
+
+/**
+Caroussel
+ */
+
+.caroussel {
+  position: relative;
+  overflow: hidden;
+  width: 800px;
+}
+
+.caroussel_container {
+  transition:transform 0.3s;
+  transform: translate3d(0, 0, 0);
+}
+
+.caroussel_container::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.caroussel_item {
+  float: left;
+}
+
+.caroussel_next, .caroussel_previous {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: #FFF url(right.svg) center center no-repeat;
+  background-size: 20px, 20px;
+  border-radius: 50%;
+  top: 50%;
+  margin-top: -20px;
+  right: 0px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.caroussel_next:hover, .caroussel_previous:hover {
+  transform: scale(1.2);
+}
+
+.caroussel_previous {
+  right: auto;
+  left: 20px;
+  background-image: url(left.svg);
+}
