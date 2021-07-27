@@ -1,3 +1,6 @@
+/*
+Caroussel
+ */
 class Caroussel {
 
     constructor(element, options = {}, pictures) {
@@ -19,8 +22,9 @@ class Caroussel {
             img.src = this.pictures[i].image_url
             img.setAttribute('id', this.pictures[i].id)
             img.addEventListener('click', (function () {
-                console.log('appel au modal avec id : ' + img.getAttribute('id'))
+                modalOpen(img.getAttribute('id'))
             }))
+            modalClose()
 
 
             this.container.appendChild(item)
@@ -73,7 +77,7 @@ class Caroussel {
 
 
 bestMoviesAPI = async function () {
-    response = await fetch('http://localhost:8000/api/v1/titles/?format=json&sort_by=-imdb_score&page_size=7')
+    let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&sort_by=-imdb_score&page_size=7')
     let data = await response.json()
     let movies = await data.results
     let pictures = []
@@ -88,8 +92,39 @@ bestMoviesAPI = async function () {
 bestMoviesCaroussel = async function () {
     new Caroussel(document.querySelector('#best_movies'), {
         slidesToScroll: 1,
-        slidesVisible: 3
+        slidesVisible: 4
     },await bestMoviesAPI())
 }
 
 bestMoviesCaroussel()
+
+/*
+Modal
+ */
+
+modalOpen = async function (id) {
+    let response = await fetch('http://127.0.0.1:8000/api/v1/titles/' + id)
+    let movie = await response.json()
+    console.log(movie)
+    document.querySelector('.image-movie').childNodes[1].src = movie['image_url']
+    document.querySelector('.title-movie').innerHTML = movie['title']
+    document.querySelector('.descritpion-movie').innerHTML = movie['long_description']
+    let actors = movie['actors']
+    let divActors = document.querySelector('.actor-movie')
+    divActors.innerHTML = ""
+    for (let i = 0; i < actors.length; i++) {
+        let li = document.createElement('li')
+        li.innerHTML = actors[i]
+        divActors.appendChild(li)
+    }
+    document.querySelector('.movie-modal').removeAttribute('style')
+
+}
+
+let modalClose = async function () {
+    let modal = await document.querySelector('.movie-modal')
+    modal.addEventListener('click', function () {
+        modal.style.display = "None"
+    })
+
+}
