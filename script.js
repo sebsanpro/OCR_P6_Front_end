@@ -1,5 +1,5 @@
 /*
-Caroussel
+Class Caroussel
  */
 class Caroussel {
 
@@ -31,8 +31,11 @@ class Caroussel {
             item.appendChild(img)
         }
         this.main.appendChild(this.container)
-        this.element.appendChild(this.main)
         this.navigation()
+        this.element.appendChild(this.previousButton)
+        this.element.appendChild(this.main)
+        this.element.appendChild(this.nextButton)
+
 
 
 
@@ -45,12 +48,12 @@ class Caroussel {
     }
 
     navigation () {
-        let nextButton = this.divWithClass('caroussel_next')
-        let previousButton = this.divWithClass('caroussel_previous')
-        this.main.appendChild(nextButton)
-        this.main.appendChild(previousButton)
-        nextButton.addEventListener('click', this.nextButt.bind(this))
-        previousButton.addEventListener('click', this.previousButt.bind(this))
+        this.nextButton = this.divWithClass('caroussel_next')
+        this.previousButton = this.divWithClass('caroussel_previous')
+        /*this.element.appendChild(this.nextButton)
+        this.element.appendChild(this.previousButton)*/
+        this.nextButton.addEventListener('click', this.nextButt.bind(this))
+        this.previousButton.addEventListener('click', this.previousButt.bind(this))
     }
 
     nextButt () {
@@ -74,8 +77,9 @@ class Caroussel {
     }
 }
 
-
-
+/*
+Best movie
+ */
 bestMoviesAPI = async function () {
     let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&sort_by=-imdb_score&page_size=7')
     let data = await response.json()
@@ -88,7 +92,6 @@ bestMoviesAPI = async function () {
 
 }
 
-
 bestMoviesCaroussel = async function () {
     new Caroussel(document.querySelector('#best_movies'), {
         slidesToScroll: 1,
@@ -97,6 +100,81 @@ bestMoviesCaroussel = async function () {
 }
 
 bestMoviesCaroussel()
+
+/*
+Best action movie
+ */
+
+bestActionMoviesAPI = async function () {
+    let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&genre=Action&sort_by=-imdb_score&page_size=7')
+    let data = await response.json()
+    let movies = await data.results
+    let pictures = []
+    for (let i = 0; i < movies.length; i++) {
+        pictures.push(movies[i].image_url)
+    }
+    return movies
+
+}
+
+bestActionMoviesCaroussel = async function () {
+    new Caroussel(document.querySelector('#best_action_movies'), {
+        slidesToScroll: 1,
+        slidesVisible: 4
+    },await bestActionMoviesAPI())
+}
+
+bestActionMoviesCaroussel()
+
+/*
+Best Family movie
+ */
+
+bestFamilyMoviesAPI = async function () {
+    let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&genre=Family&sort_by=-imdb_score&page_size=7')
+    let data = await response.json()
+    let movies = await data.results
+    let pictures = []
+    for (let i = 0; i < movies.length; i++) {
+        pictures.push(movies[i].image_url)
+    }
+    return movies
+
+}
+
+bestFamilyMoviesCaroussel = async function () {
+    new Caroussel(document.querySelector('#best_family_movies'), {
+        slidesToScroll: 1,
+        slidesVisible: 4
+    },await bestFamilyMoviesAPI())
+}
+
+bestFamilyMoviesCaroussel()
+
+/*
+Best Comedy movie
+ */
+
+bestComedyMoviesAPI = async function () {
+    let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&genre=Comedy&sort_by=-imdb_score&page_size=7')
+    let data = await response.json()
+    let movies = await data.results
+    let pictures = []
+    for (let i = 0; i < movies.length; i++) {
+        pictures.push(movies[i].image_url)
+    }
+    return movies
+
+}
+
+bestComedyMoviesCaroussel = async function () {
+    new Caroussel(document.querySelector('#best_comedy_movies'), {
+        slidesToScroll: 1,
+        slidesVisible: 4
+    },await bestComedyMoviesAPI())
+}
+
+bestComedyMoviesCaroussel()
 
 /*
 Modal
@@ -121,7 +199,7 @@ modalOpen = async function (id) {
 
 }
 
-let modalClose = async function () {
+modalClose = async function () {
     let modal = await document.querySelector('.movie-modal')
     modal.addEventListener('click', function () {
         modal.style.display = "None"

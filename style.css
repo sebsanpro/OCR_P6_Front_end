@@ -1,19 +1,27 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
-  background: rgba(24, 24, 24, 0.96);
+  background: url("Senza titolo-1.jpg");
+  font-family: "Orbitron", sans-serif;
 }
 
 /**
 Caroussel
  */
-#best_movies {
+#best_movies, #best_action_movies, #best_family_movies, #best_comedy_movies {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .caroussel {
-  position: relative;
   overflow: hidden;
-  width: 70%;
+  position: relative;
+  width: 50%;
+  padding: 4px;
+  min-width: 764px;
 }
 
 .caroussel_container {
@@ -30,18 +38,22 @@ Caroussel
 
 .caroussel_item {
   float: left;
+  transition: transform 0.3s;
+}
+
+.caroussel_item:hover {
+  transform: scale(1.1);
 }
 
 .caroussel_next, .caroussel_previous {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background: #FFF url(right.svg) center center no-repeat;
-  background-size: 20px, 20px;
+  width: 45px;
+  height: 45px;
+  background: url(right2.png) center center no-repeat;
+  background-size: 50px, 50px;
   border-radius: 50%;
   top: 50%;
   margin-top: -20px;
-  right: 20px;
+  right: -20px;
   cursor: pointer;
   transition: transform 0.3s;
 }
@@ -52,8 +64,8 @@ Caroussel
 
 .caroussel_previous {
   right: auto;
-  left: 20px;
-  background-image: url(left.svg);
+  left: -20px;
+  background-image: url(left2.png);
 }
 
 /*
@@ -61,9 +73,6 @@ Caroussel
  */
 .movie-modal {
   position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: rgba(0, 0, 0, 0.8);
   top: 0;
   left: 0;
@@ -73,8 +82,16 @@ Caroussel
 }
 
 .modal {
-  background: white;
+  background: linear-gradient(125deg, grey 2%, black);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5em;
+  padding: 10px;
   width: 60%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=style.css.map */
