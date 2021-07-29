@@ -1,40 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-    </style>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>JustStreamIt</title>
 </head>
 <body>
-    <h1 style="color: white; text-align: center">Films les mieux notés</h1>
+    <img class="logo" src="logo.png" alt="logo">
+    <div class="first-best-movie">
+        <div class="image-movie-best" alt="best_movie">
+            <img src="" alt="">
+        </div>
+        <div class="title-movie-best"></div>
+        <div class="btn-with-description">
+            <button class="btn-open">Voir la fiche</button>
+            <div class="description-movie-best"></div>
+        </div>
+    </div>
+    <br><br><br>
+    <h1>Films les mieux notés</h1>
     <div id="best_movies">
     </div>
     <br>
-    <h1 style="color: white; text-align: center">Films d'Action les mieux notés</h1>
+    <h1>Films d'Action les mieux notés</h1>
     <div id="best_action_movies">
     </div>
     <br>
-    <h1 style="color: white; text-align: center">Films Familiales les mieux notés</h1>
+    <h1>Films Familiales les mieux notés</h1>
     <div id="best_family_movies">
     </div>
     <br>
-    <h1 style="color: white; text-align: center">Films Comédies les mieux notés</h1>
+    <h1>Films Comédies les mieux notés</h1>
     <div id="best_comedy_movies">
     </div>
 
-    <aside class="movie-modal" style="display: none">
+    <aside class="movie-modal">
         <div class="modal">
-            <div class="image-movie" alt="">
+            <div class="image-movie" alt="movie_img">
                 <img src="" alt="">
             </div>
-            <div class="title-movie"></div>
-            <div class="descritpion-movie">
-                <p></p>
-            </div>
-            <div class="actor-movie">
+            <div class="info">
+                <div class="title-movie"></div>
+                <br>
+                <div class="genres"></div>
+                <div class="date-published"></div>
+                <div class="rated"></div>
+                <div class="imdb-score"></div>
+                <div class="directors"></div>
+                <div class="duration"></div>
+                <div class="countries"></div>
+                <div class="worldwide-gross-income"></div>
+                <div class="description-movie">
+                    <p></p>
+                </div>
+                <div class="actor-movie">
+                </div>
             </div>
         </div>
     </aside>

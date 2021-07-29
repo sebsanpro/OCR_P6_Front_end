@@ -83,12 +83,7 @@ Best movie
 bestMoviesAPI = async function () {
     let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&sort_by=-imdb_score&page_size=7')
     let data = await response.json()
-    let movies = await data.results
-    let pictures = []
-    for (let i = 0; i < movies.length; i++) {
-        pictures.push(movies[i].image_url)
-    }
-    return movies
+    return data.results;
 
 }
 
@@ -108,12 +103,7 @@ Best action movie
 bestActionMoviesAPI = async function () {
     let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&genre=Action&sort_by=-imdb_score&page_size=7')
     let data = await response.json()
-    let movies = await data.results
-    let pictures = []
-    for (let i = 0; i < movies.length; i++) {
-        pictures.push(movies[i].image_url)
-    }
-    return movies
+    return data.results;
 
 }
 
@@ -133,12 +123,7 @@ Best Family movie
 bestFamilyMoviesAPI = async function () {
     let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&genre=Family&sort_by=-imdb_score&page_size=7')
     let data = await response.json()
-    let movies = await data.results
-    let pictures = []
-    for (let i = 0; i < movies.length; i++) {
-        pictures.push(movies[i].image_url)
-    }
-    return movies
+    return data.results;
 
 }
 
@@ -158,12 +143,7 @@ Best Comedy movie
 bestComedyMoviesAPI = async function () {
     let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&genre=Comedy&sort_by=-imdb_score&page_size=7')
     let data = await response.json()
-    let movies = await data.results
-    let pictures = []
-    for (let i = 0; i < movies.length; i++) {
-        pictures.push(movies[i].image_url)
-    }
-    return movies
+    return data.results;
 
 }
 
@@ -184,20 +164,69 @@ modalOpen = async function (id) {
     let response = await fetch('http://127.0.0.1:8000/api/v1/titles/' + id)
     let movie = await response.json()
     console.log(movie)
-    document.querySelector('.image-movie').childNodes[1].src = movie['image_url']
-    document.querySelector('.title-movie').innerHTML = movie['title']
-    document.querySelector('.descritpion-movie').innerHTML = movie['long_description']
-    let actors = movie['actors']
-    let divActors = document.querySelector('.actor-movie')
-    divActors.innerHTML = ""
-    for (let i = 0; i < actors.length; i++) {
-        let li = document.createElement('li')
-        li.innerHTML = actors[i]
-        divActors.appendChild(li)
-    }
+    movieInfo(movie)
     document.querySelector('.movie-modal').removeAttribute('style')
+    document.querySelector('.movie-modal').style.display = 'initial'
+
 
 }
+movieInfo = function (movie) {
+
+
+    document.querySelector('.image-movie').childNodes[1].src = movie['image_url']
+
+    document.querySelector('.title-movie').innerHTML = "<H1>" + movie['title'] + "</H1>"
+
+    let genres = movie['genres']
+    let divGenres = document.querySelector('.genres')
+    divGenres.innerHTML = "<H3>Genre : </H3>"
+    for (let genre = 0; genre < genres.length; genre++) {
+        let li = document.createElement('li')
+        li.innerHTML = genres[genre] + ", "
+        divGenres.appendChild(li)
+    }
+
+    document.querySelector('.date-published').innerHTML = "<H3>Date de sortie : </H3>" + movie['date_published']
+
+    document.querySelector('.rated').innerHTML = "<H3>Rated : </H3>" + movie['rated']
+
+    document.querySelector('.imdb-score').innerHTML = "<H3>Score : </H3>" + movie['imdb_score']
+
+    let directors = movie['directors']
+    let divDirectors = document.querySelector('.directors')
+    divDirectors.innerHTML = "<H3>Réalisateurs : </H3>"
+    for (let director = 0; director < directors.length; director++) {
+        let li = document.createElement('li')
+        li.innerHTML = directors[director] + ", "
+        divDirectors.appendChild(li)
+    }
+
+    let actors = movie['actors']
+    let divActors = document.querySelector('.actor-movie')
+    divActors.innerHTML = "<H3>Acteurs : </H3>"
+    for (let i = 0; i < actors.length; i++) {
+        let li = document.createElement('li')
+        li.innerHTML = actors[i] + ", "
+        divActors.appendChild(li)
+    }
+
+    document.querySelector('.duration').innerHTML = "<H3>Durée : </H3>" + movie['duration']
+
+    let countries = movie['countries']
+    let divCountries = document.querySelector('.countries')
+    divCountries.innerHTML = "<H3>Pays d'origine : "
+    for (let countrie = 0; countrie < countries.length; countrie++) {
+        let li = document.createElement('li')
+        li.innerHTML = countries[countrie] + ", "
+        divCountries.appendChild(li)
+    }
+
+    document.querySelector('.worldwide-gross-income').innerHTML = "<H3>Résultat au Box Office : </H3>" + movie['worldwide_gross_income']
+
+    document.querySelector('.description-movie').innerHTML = "<H3>Résumé : </H3>" + movie['long_description']
+
+}
+
 
 modalClose = async function () {
     let modal = await document.querySelector('.movie-modal')
@@ -206,3 +235,25 @@ modalClose = async function () {
     })
 
 }
+
+/*
+first best movie
+ */
+
+test = async function () {
+    let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&sort_by=-imdb_score&page_size=2')
+    let data = await response.json()
+    let movieId = await data.results[0].id
+    let responseMovie = await fetch('http://127.0.0.1:8000/api/v1/titles/' + movieId)
+    let movie = await responseMovie.json()
+    document.querySelector('.image-movie-best').childNodes[1].src = movie['image_url']
+    document.querySelector('.title-movie-best').innerHTML = "<H1>" + movie['title'] + "</H1>"
+    document.querySelector('.description-movie-best').innerHTML = movie['long_description']
+    let btnOpen = document.querySelector('.btn-open')
+    btnOpen.addEventListener('click', (function () {
+        modalOpen(movie['id'])
+    }))
+
+    await modalClose()
+}
+test()
