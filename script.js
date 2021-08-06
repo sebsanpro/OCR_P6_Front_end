@@ -1,8 +1,10 @@
-/*
-Class Caroussel
+/**
+ * Create carousels according to the chosen parameters
+ * @param{[document]} element [queryselector div id]
+ * @param{[list]} option [slide to scroll and slide visible]
+ * @param{[function]} pictures [fetch of API for watch movie]
  */
 class Caroussel {
-
     constructor(element, options = {}, pictures) {
         this.element = element
         this.options = Object.assign({}, {
@@ -77,8 +79,8 @@ class Caroussel {
     }
 }
 
-/*
-Best movie
+/**
+*Best movie
  */
 bestMoviesAPI = async function () {
     let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&sort_by=-imdb_score&page_size=7')
@@ -96,8 +98,8 @@ bestMoviesCaroussel = async function () {
 
 bestMoviesCaroussel()
 
-/*
-Best action movie
+/**
+*Best action movie
  */
 
 bestActionMoviesAPI = async function () {
@@ -116,8 +118,8 @@ bestActionMoviesCaroussel = async function () {
 
 bestActionMoviesCaroussel()
 
-/*
-Best Family movie
+/**
+*Best Family movie
  */
 
 bestFamilyMoviesAPI = async function () {
@@ -156,10 +158,10 @@ bestComedyMoviesCaroussel = async function () {
 
 bestComedyMoviesCaroussel()
 
-/*
-Modal
+/**
+ * Modal opening
+ * param{[int]} id [id of movie in API]
  */
-
 modalOpen = async function (id) {
     let response = await fetch('http://127.0.0.1:8000/api/v1/titles/' + id)
     let movie = await response.json()
@@ -170,6 +172,11 @@ modalOpen = async function (id) {
 
 
 }
+
+/**
+ * show information of movie selected in modal
+ * @param movie list info movie in json format, API return
+ */
 movieInfo = function (movie) {
 
 
@@ -227,7 +234,10 @@ movieInfo = function (movie) {
 
 }
 
-
+/**
+ * Close modal
+ * @returns {Promise<void>}
+ */
 modalClose = async function () {
     let modal = await document.querySelector('.movie-modal')
     modal.addEventListener('click', function () {
@@ -236,11 +246,10 @@ modalClose = async function () {
 
 }
 
-/*
-first best movie
+/**
+ * Show best movie in html container in top of page
  */
-
-test = async function () {
+bestMovie = async function () {
     let response = await fetch('http://localhost:8000/api/v1/titles/?format=json&sort_by=-imdb_score&page_size=2')
     let data = await response.json()
     let movieId = await data.results[0].id
@@ -256,4 +265,4 @@ test = async function () {
 
     await modalClose()
 }
-test()
+bestMovie()
