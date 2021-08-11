@@ -63,7 +63,7 @@ body {
 .caroussel_previous {
   right: auto;
   left: -20px;
-  background-image: url(left2.png);
+  background-image: url(left.png);
 }
 
 .movie-modal {
